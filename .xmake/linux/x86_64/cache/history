@@ -21,6 +21,18 @@
         "xmake ",
         "xmake clean",
         "xmake clean",
-        "xmake clean"
+        "xmake clean",
+        "xmake clean",
+        "xmake ",
+        "xmake run",
+        "xmake run ex8 -- -m /home/send2/spack/opt/spack/linux-ubuntu24.04-x86_64_v4/gcc-13.3.0/mfem-4.7.0-rsop3l7ix26ze4hyqvyaitixboqdko7g/share/mfem/data/star.mesh",
+        "xmake run ex8 -- -m /home/send2/spack/opt/spack/linux-ubuntu24.04-x86_64_v4/gcc-13.3.0/mfem-4.7.0-rsop3l7ix26ze4hyqvyaitixboqdko7g/share/mfem/data/star.mesh",
+        "xmake run ex8 -- -m /home/send2/spack/opt/spack/linux-ubuntu24.04-x86_64_v4/gcc-13.3.0/mfem-4.7.0-rsop3l7ix26ze4hyqvyaitixboqdko7g/share/mfem/data/star.mesh",
+        "xmake run ex8 -m /home/send2/spack/opt/spack/linux-ubuntu24.04-x86_64_v4/gcc-13.3.0/mfem-4.7.0-rsop3l7ix26ze4hyqvyaitixboqdko7g/share/mfem/data/star.mesh",
+        "xmake run ex8 -m /home/send2/spack/opt/spack/linux-ubuntu24.04-x86_64_v4/gcc-13.3.0/mfem-4.7.0-rsop3l7ix26ze4hyqvyaitixboqdko7g/share/mfem/data/star.mesh",
+        "xmake run",
+        "xmake run",
+        "xmake run",
+        "xmake run ex8 -m data/star.mesh"
     }
 }

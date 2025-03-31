@@ -1,83 +1,103 @@
 {
-    nasm_arch_x86_64_plat_linux = {
+    cross_arch_x86_64_plat_linux = {
         plat = "linux",
-        __checked = true,
+        __global = true,
         arch = "x86_64",
-        __global = true
+        __checked = false
     },
     fpc_arch_x86_64_plat_linux = {
         plat = "linux",
-        __checked = true,
+        __global = true,
         arch = "x86_64",
-        __global = true
-    },
-    rust_arch_x86_64_plat_linux = {
-        plat = "linux",
-        __checked = true,
-        arch = "x86_64",
-        __global = true
-    },
-    envs_arch_x86_64_plat_linux = {
-        plat = "linux",
-        __checked = true,
-        arch = "x86_64",
-        __global = true
-    },
-    cuda_arch_x86_64_plat_linux = {
-        plat = "linux",
-        __checked = true,
-        arch = "x86_64",
-        __global = true
-    },
-    go_arch_x86_64_plat_linux = {
-        plat = "linux",
-        __checked = true,
-        arch = "x86_64",
-        __global = true
-    },
-    fasm_arch_x86_64_plat_linux = {
-        plat = "linux",
-        __checked = true,
-        arch = "x86_64",
-        __global = true
+        __checked = true
     },
     yasm_arch_x86_64_plat_linux = {
         plat = "linux",
-        __checked = true,
+        __global = true,
         arch = "x86_64",
-        __global = true
-    },
-    gfortran_arch_x86_64_plat_linux = {
-        plat = "linux",
-        __checked = true,
-        arch = "x86_64",
-        __global = true
-    },
-    cross_arch_x86_64_plat_linux = {
-        plat = "linux",
-        __checked = false,
-        arch = "x86_64",
-        __global = true
+        __checked = true
     },
     swift_arch_x86_64_plat_linux = {
         plat = "linux",
-        __checked = true,
+        __global = true,
         arch = "x86_64",
-        __global = true
+        __checked = true
     },
-    gcc_arch_x86_64_plat_linux = {
+    rust_arch_x86_64_plat_linux = {
         plat = "linux",
-        __checked = {
-            program = "/usr/bin/gcc",
-            name = "gcc"
-        },
+        __global = true,
         arch = "x86_64",
-        __global = true
+        __checked = true
+    },
+    fasm_arch_x86_64_plat_linux = {
+        plat = "linux",
+        __global = true,
+        arch = "x86_64",
+        __checked = true
+    },
+    go_arch_x86_64_plat_linux = {
+        plat = "linux",
+        __global = true,
+        arch = "x86_64",
+        __checked = true
+    },
+    tool_target_ex8_linux_x86_64_ld = {
+        toolname = "gxx",
+        toolchain_info = {
+            name = "gcc",
+            plat = "linux",
+            cachekey = "gcc_arch_x86_64_plat_linux",
+            arch = "x86_64"
+        },
+        program = "/usr/bin/g++"
+    },
+    nasm_arch_x86_64_plat_linux = {
+        plat = "linux",
+        __global = true,
+        arch = "x86_64",
+        __checked = true
+    },
+    gfortran_arch_x86_64_plat_linux = {
+        plat = "linux",
+        __global = true,
+        arch = "x86_64",
+        __checked = true
+    },
+    cuda_arch_x86_64_plat_linux = {
+        plat = "linux",
+        __global = true,
+        arch = "x86_64",
+        __checked = true
     },
     nim_arch_x86_64_plat_linux = {
         plat = "linux",
-        __checked = false,
+        __global = true,
         arch = "x86_64",
-        __global = true
+        __checked = false
+    },
+    envs_arch_x86_64_plat_linux = {
+        plat = "linux",
+        __global = true,
+        arch = "x86_64",
+        __checked = true
+    },
+    gcc_arch_x86_64_plat_linux = {
+        plat = "linux",
+        __global = true,
+        arch = "x86_64",
+        __checked = {
+            name = "gcc",
+            program = "/usr/bin/gcc"
+        }
+    },
+    tool_target_ex8_linux_x86_64_cxx = {
+        toolname = "gcc",
+        toolchain_info = {
+            name = "gcc",
+            plat = "linux",
+            cachekey = "gcc_arch_x86_64_plat_linux",
+            arch = "x86_64"
+        },
+        program = "/usr/bin/gcc"
     }
 }

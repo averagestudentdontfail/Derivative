@@ -43,13 +43,13 @@ target("ex8")
 
     -- Libraries
     add_links(
-        "umfpack", "cholmod", "amd", "colamd", "suitesparseconfig"
+        "umfpack", "cholmod", "amd", "colamd", "suitesparseconfig" 
     )
     add_links(
         "HYPRE", "metis", "petsc", "superlu_dist", 
         "sundials_cvode", "sundials_nvecserial", "sundials_nvecparallel", 
         "conduit", "conduit_relay", "conduit_blueprint", 
-        "lapack", "blas", "z", "mpi" -
+        "lapack", "blas", "z", "mpi" 
     )
     add_links("mfem") 
 

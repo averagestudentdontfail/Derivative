@@ -1,0 +1,55 @@
+{
+    find_programver = {
+        ["/usr/bin/gcc"] = "13.3.0-6ubuntu2"
+    },
+    ["lib.detect.has_flags"] = {
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx__-m64_-fPIC"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-O3"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-fopenmp"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-Wall"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-MMD -MF"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-Wno-gnu-line-marker -Werror"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-fdiagnostics-color=always"] = true
+    },
+    find_program = {
+        ping = "/usr/bin/ping",
+        git = "/usr/bin/git",
+        ["/usr/bin/gcc"] = "/usr/bin/gcc"
+    },
+    ["core.tools.gcc.has_cflags"] = {
+        ["/usr/bin/gcc_13.3.0-6ubuntu2"] = {
+            ["-print-multiarch"] = true,
+            ["-pass-exit-codes"] = true,
+            ["-Xassembler"] = true,
+            ["-dumpmachine"] = true,
+            ["-shared"] = true,
+            ["-print-sysroot"] = true,
+            ["-print-libgcc-file-name"] = true,
+            ["-print-multi-directory"] = true,
+            ["--version"] = true,
+            ["-pipe"] = true,
+            ["-dumpspecs"] = true,
+            ["-print-search-dirs"] = true,
+            ["-Xlinker"] = true,
+            ["--help"] = true,
+            ["-print-multi-lib"] = true,
+            ["--target-help"] = true,
+            ["--param"] = true,
+            ["-B"] = true,
+            ["-dumpversion"] = true,
+            ["-o"] = true,
+            ["-time"] = true,
+            ["-print-sysroot-headers-suffix"] = true,
+            ["-S"] = true,
+            ["-E"] = true,
+            ["-x"] = true,
+            ["-Xpreprocessor"] = true,
+            ["-v"] = true,
+            ["-print-multi-os-directory"] = true,
+            ["-save-temps"] = true,
+            ["-no-canonical-prefixes"] = true,
+            ["-c"] = true,
+            ["-pie"] = true
+        }
+    }
+}

@@ -1,6 +1,10 @@
 {
     cmdlines = {
         "xmake clean",
-        "xmake clean"
+        "xmake clean",
+        "xmake clean",
+        "xmake ",
+        "xmake lua /home/send2/.local/share/xmake/modules/private/utils/statistics.lua",
+        "xmake lua /home/send2/.local/share/xmake/actions/build/cleaner.lua"
     }
 }

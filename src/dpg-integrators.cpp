@@ -4,7 +4,7 @@ namespace mfem
 {
 
 // --- MixedScalarWeakGradientIntegrator --- (u, div w)
-void MixedScalarWeakGradientIntegrator::AssembleElementMatrix(
+void DPGMixedScalarWeakGradientIntegrator::AssembleElementMatrix(
     const FiniteElement &trial_fe, const FiniteElement &test_fe,
     ElementTransformation &Trans, DenseMatrix &elmat)
 {

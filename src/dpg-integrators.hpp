@@ -16,15 +16,15 @@ public:
 
 // Integrator for (u, div w) - trial u (scalar), test w (vector)
 // Used in sigma - grad u = 0 -> (sigma, w) + (u, div w) - <{u}, [w.n]> = 0
-class MixedScalarWeakGradientIntegrator : public BilinearFormIntegrator
+class DPGMixedScalarWeakGradientIntegrator : public BilinearFormIntegrator 
 {
 public:
-    MixedScalarWeakGradientIntegrator() = default;
+    DPGMixedScalarWeakGradientIntegrator() = default; 
 
     virtual void AssembleElementMatrix(const FiniteElement &trial_fe, // scalar u
                                      const FiniteElement &test_fe,  // vector w
                                      ElementTransformation &Trans,
-                                     DenseMatrix &elmat) override;
+                                     DenseMatrix &elmat); 
 };
 
 

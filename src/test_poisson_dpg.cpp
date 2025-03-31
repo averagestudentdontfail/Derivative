@@ -106,45 +106,27 @@ bool TestPoissonDPG(int order, int ref_levels, bool visualization)
 
 
     // --- Coupling Form B ---
-    // Equation 1: sigma + grad u = 0 -> (sigma, w) - (u, div w) + <{u}, [w.n]> = 0 (sign flip for grad)
-    // Equation 2: -div sigma = f -> (-div sigma, v) = (f, v)
     unique_ptr<BlockOperator> B(new BlockOperator(test_block_offsets, trial_block_offsets));
-    B->owns_blocks = true; // B will delete the blocks
-
-    // B(0,0) = (v, u): Zero term
-    // B(0,1) = (v, sigma): (-div sigma, v) -> using MixedVectorWeakDivergenceIntegrator
+    B->owns_blocks = true; 
     unique_ptr<ParMixedBilinearForm> b01(new ParMixedBilinearForm(trial_fes[SIGMA], test_fes[V]));
-    b01->AddDomainIntegrator(new MixedVectorWeakDivergenceIntegrator(one)); // Default sign is (div u, v), we want (-div sigma, v)
-    // Need to handle boundary terms? -(sigma.n, v)_bdr. Assume natural BC for now (sigma.n = 0)
+    b01->AddDomainIntegrator(new MixedVectorWeakDivergenceIntegrator(one)); 
     b01->Assemble();
     b01->Finalize();
     B->SetBlock(V, SIGMA, b01.release());
-
-
-    // B(1,0) = (w, u): -(u, div w) + <{u}, [w.n]>_int + <u, w.n>_bdr
     unique_ptr<ParMixedBilinearForm> b10(new ParMixedBilinearForm(trial_fes[U], test_fes[W]));
     ConstantCoefficient neg_one(-1.0);
-    b10->AddDomainIntegrator(new MixedScalarWeakGradientIntegrator()); // -(u, div w) term handled by integrator sign? Check impl. YES, need neg_one coeff.
-    // Correction: The integrator computes (u, div w). We need -(u, div w).
-    // Let's redefine MixedScalarWeakGradientIntegrator to take a coefficient.
-    // Or add the neg_one coefficient here. Let's try coefficient.
-    // Reverting: No, the standard form is (grad u, w) -> -(u, div w) + bdr. Our form is (u, div w). So sign is correct.
-    b10->AddInteriorFaceIntegrator(new UltraweakJumpIntegrator()); // Handles <{u}, [w.n]> and <u, w.n>_bdr
-    // Boundary condition u=0 on bdr: The jump term <u, w.n>_bdr becomes <0, w.n> = 0.
+    b10->AddDomainIntegrator(new DPGMixedScalarWeakGradientIntegrator()); 
+    b10->AddInteriorFaceIntegrator(new UltraweakJumpIntegrator()); 
     b10->Assemble();
     b10->Finalize();
     B->SetBlock(W, U, b10.release());
-
-    // B(1,1) = (w, sigma): (sigma, w)
     unique_ptr<ParMixedBilinearForm> b11(new ParMixedBilinearForm(trial_fes[SIGMA], test_fes[W]));
-    b11->AddDomainIntegrator(new VectorFEMassIntegrator(one)); // (sigma, w)
+    b11->AddDomainIntegrator(new VectorFEMassIntegrator(one));
     b11->Assemble();
     b11->Finalize();
     B->SetBlock(W, SIGMA, b11.release());
 
-
-    // 4. Set up Solvers
-    HypreBoomerAMG G_prec(*G); // Simple AMG for the whole block G for now
+    HypreBoomerAMG G_prec(*G); 
     G_prec.SetPrintLevel(0);
     HyprePCG G_solver(G->GetComm());
     G_solver.SetTol(1e-12);
@@ -153,14 +135,12 @@ bool TestPoissonDPG(int order, int ref_levels, bool visualization)
     G_solver.SetOperator(*G);
     G_solver.SetPreconditioner(G_prec);
 
-    SolverOperator G_inv_op(G_solver); // Wrap solver as Operator
+    SolverOperator G_inv_op(G_solver); 
     TransposeOperator B_T_op(B.get());
 
-    // A = B^T G^{-1} B
     ProductOperator GinvB_op(&G_inv_op, B.get(), false, false);
     unique_ptr<ProductOperator> A(new ProductOperator(&B_T_op, &GinvB_op, false, false));
 
-    // RHS_eff = B^T G^{-1} F
     BlockVector G_inv_F(test_block_offsets);
     G_inv_F = 0.0;
     G_solver.Mult(*F, G_inv_F); // Apply G^{-1} to F
@@ -173,9 +153,8 @@ bool TestPoissonDPG(int order, int ref_levels, bool visualization)
     HypreGMRES A_solver(A->GetComm());
     A_solver.SetTol(1e-8);
     A_solver.SetMaxIter(500);
-    A_solver.SetPrintLevel(1); // Print GMRES iterations
+    A_solver.SetPrintLevel(1); 
     A_solver.SetOperator(*A);
-    // No preconditioner for A yet
 
     // 5. Solve the system
     BlockVector U_sol(trial_block_offsets);

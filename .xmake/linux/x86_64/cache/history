@@ -1,0 +1,6 @@
+{
+    cmdlines = {
+        "xmake clean",
+        "xmake "
+    }
+}

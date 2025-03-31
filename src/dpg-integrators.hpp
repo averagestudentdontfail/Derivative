@@ -41,13 +41,13 @@ public:
                                   const FiniteElement &test_fe1,  // w on K1
                                   const FiniteElement &test_fe2,  // w on K2
                                   FaceElementTransformations &Trans,
-                                  DenseMatrix &elmat) override;
+                                  DenseMatrix &elmat); 
 
     // Boundary faces
     virtual void AssembleBoundaryFaceMatrix(const FiniteElement &trial_fe, // u on K
                                           const FiniteElement &test_fe,  // w on K
                                           FaceElementTransformations &Trans,
-                                          DenseMatrix &elmat) override;
+                                          DenseMatrix &elmat); 
 };
 
 

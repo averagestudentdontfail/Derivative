@@ -11,15 +11,16 @@ using namespace std;
 bool TestPoissonDPG(int order, int ref_levels, bool visualization)
 {
     int myid = Mpi::WorldRank();
-    int num_procs = Mpi::WorldSize();
+    int num_procs = Mpi::WorldSize(); 
 
     if (myid == 0) {
         cout << "\n--- Testing Poisson DPG ---" << endl;
+        cout << "  MPI Procs: " << num_procs << endl; 
         cout << "  Order: " << order << ", Ref Levels: " << ref_levels << endl;
     }
 
     // 1. Mesh
-    Mesh serial_mesh = Mesh::MakeCartesian2D(4, 4, Element::QUADRILATERAL, true); // Small base mesh
+    Mesh serial_mesh = Mesh::MakeCartesian2D(4, 4, Element::QUADRILATERAL, true); 
     for (int i = 0; i < ref_levels; ++i) {
         serial_mesh.UniformRefinement();
     }

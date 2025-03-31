@@ -1,6 +1,58 @@
 {
-    find_program = {
-        nim = false,
+    find_programver = {
+        ["/usr/bin/gcc"] = "13.3.0-6ubuntu2"
+    },
+    ["core.tools.gcc.has_cflags"] = {
+        ["/usr/bin/gcc_13.3.0-6ubuntu2"] = {
+            ["--target-help"] = true,
+            ["-v"] = true,
+            ["-o"] = true,
+            ["-print-multiarch"] = true,
+            ["-x"] = true,
+            ["--param"] = true,
+            ["-print-search-dirs"] = true,
+            ["-Xlinker"] = true,
+            ["-pass-exit-codes"] = true,
+            ["-pipe"] = true,
+            ["-print-sysroot-headers-suffix"] = true,
+            ["-save-temps"] = true,
+            ["-print-sysroot"] = true,
+            ["-dumpmachine"] = true,
+            ["-print-multi-lib"] = true,
+            ["-dumpspecs"] = true,
+            ["-dumpversion"] = true,
+            ["-print-multi-os-directory"] = true,
+            ["-print-libgcc-file-name"] = true,
+            ["-print-multi-directory"] = true,
+            ["-E"] = true,
+            ["-pie"] = true,
+            ["-B"] = true,
+            ["--version"] = true,
+            ["-Xpreprocessor"] = true,
+            ["-no-canonical-prefixes"] = true,
+            ["-S"] = true,
+            ["-shared"] = true,
+            ["-Xassembler"] = true,
+            ["--help"] = true,
+            ["-c"] = true,
+            ["-time"] = true
+        }
+    },
+    find_program_gcc_arch_x86_64_plat_linux_checktoolcxx = {
         gcc = "/usr/bin/gcc"
+    },
+    find_program = {
+        gcc = "/usr/bin/gcc",
+        nim = false,
+        ["/usr/bin/gcc"] = "/usr/bin/gcc"
+    },
+    ["lib.detect.has_flags"] = {
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-O3"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx__-m64_-fPIC"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-Wno-gnu-line-marker -Werror"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-fdiagnostics-color=always"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-Wall"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-MMD -MF"] = true,
+        ["linux_x86_64_/usr/bin/gcc_13.3.0-6ubuntu2_cxx_cxflags_-m64_-fopenmp"] = true
     }
 }

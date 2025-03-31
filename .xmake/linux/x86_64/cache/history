@@ -33,6 +33,7 @@
         "xmake run",
         "xmake run",
         "xmake run",
-        "xmake run ex8 -m data/star.mesh"
+        "xmake run ex8 -m data/star.mesh",
+        "xmake run ex8 -m .data/star.mesh"
     }
 }

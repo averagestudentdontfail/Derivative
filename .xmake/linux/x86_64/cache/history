@@ -13,6 +13,8 @@
         "xmake clean",
         "xmake ",
         "xmake clean",
-        "xmake "
+        "xmake ",
+        "xmake run ex8.cpp",
+        "xmake run"
     }
 }

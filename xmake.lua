@@ -65,9 +65,6 @@ target("Derivative")
     -- Source
     add_files("src/*.cpp")
 
-    -- Header
-    add_files("src/*.hpp")
-    
     -- Directories
     add_includedirs("src")
     

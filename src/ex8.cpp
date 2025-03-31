@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
    MixedBilinearForm *B0 = new MixedBilinearForm(x0_space,test_space);
    B0->AddDomainIntegrator(new DiffusionIntegrator(one));
    B0->Assemble();
-   // MFEM 4.7.0 Change: Use EliminateTrialDofs instead of EliminateTrialEssentialBC
+   // MFEM 4.7.0 Change: Use EliminateTrialDofs for MixedBilinearForm
    // This modifies B0 and F based on the essential BCs applied to the trial space (x0).
    B0->EliminateTrialDofs(ess_bdr, x.GetBlock(x0_var), F);
    B0->Finalize(); // Finalize *after* elimination
@@ -177,23 +177,15 @@ int main(int argc, char *argv[])
    BilinearForm *S0 = new BilinearForm(x0_space);
    S0->AddDomainIntegrator(new DiffusionIntegrator(one));
    S0->Assemble();
-   // MFEM 4.7.0 Change: Use EliminateTrialDofs and EliminateTestDofs instead of EliminateEssentialBC
-   // For BilinearForm, need to eliminate rows and columns corresponding to essential DOFs.
-   // Create dummy zero vectors needed for EliminateTrialDofs signature when BC is homogeneous.
-   Vector s0_sol_dummy(x0_space->GetTrueVSize()); // Use TrueVSize for potential parallel runs
-   Vector s0_rhs_dummy(x0_space->GetTrueVSize());
-   s0_sol_dummy = 0.0;
-   s0_rhs_dummy = 0.0; // We don't care about RHS modification for S0 itself here
-   // Eliminate columns corresponding to essential boundary DOFs (modifies matrix and potentially rhs_dummy)
-   S0->EliminateTrialDofs(ess_bdr, s0_sol_dummy, s0_rhs_dummy);
-   // Eliminate rows corresponding to essential boundary DOFs (zeroes out rows)
-   S0->EliminateTestDofs(ess_bdr);
-   S0->Finalize(); // Finalize *after* eliminations
+   // MFEM 4.7.0 Change: Use EliminateEssentialBC for BilinearForm
+   // This modifies the S0 matrix directly based on boundary attributes.
+   S0->EliminateEssentialBC(ess_bdr); // Default policy DIAG_ONE is suitable here
+   S0->Finalize(); // Finalize *after* elimination
 
    SparseMatrix &matB0   = B0->SpMat();
    SparseMatrix &matBhat = Bhat->SpMat();
    SparseMatrix &matSinv = Sinv->SpMat();
-   SparseMatrix &matS0   = S0->SpMat();
+   SparseMatrix &matS0   = S0->SpMat(); // Use the modified S0 matrix
 
    // 8. Set up the 1x2 block Least Squares DPG operator, B = [B0  Bhat],
    //    the normal equation operator, A = B^t Sinv B, and
@@ -234,12 +226,9 @@ int main(int argc, char *argv[])
    S0inv->iterative_mode = false;
    Shatinv->iterative_mode = false;
 #else
-   // Note: UMFPackSolver might need the original matrix before BC elimination
-   // depending on its internal handling. However, since S0 has BCs eliminated
-   // symmetrically (rows/cols zeroed), using the modified matS0 should work.
-   // If issues arise with SuiteSparse, this might need further investigation
-   // for MFEM 4.7.0's specific interaction. For now, assume it works with matS0.
-   Operator *S0inv = new UMFPackSolver(matS0); // Use the BC-modified S0
+   // Use the BC-modified matS0, which should be suitable for UMFPackSolver
+   // as EliminateEssentialBC modifies the matrix symmetrically for DIAG_ONE.
+   Operator *S0inv = new UMFPackSolver(matS0);
    Operator *Shatinv = new UMFPackSolver(*Shat);
 #endif
 

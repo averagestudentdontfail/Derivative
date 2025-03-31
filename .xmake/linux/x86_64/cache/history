@@ -34,6 +34,18 @@
         "xmake run",
         "xmake run",
         "xmake run ex8 -m data/star.mesh",
-        "xmake run ex8 -m .data/star.mesh"
+        "xmake run ex8 -m .data/star.mesh",
+        "xmake clean",
+        "xmake ",
+        "xmake run",
+        "xmake run ex8 -m .data/star.mesh",
+        "xmake run ex8 -m data/star.mesh",
+        "xmake ",
+        "xmake run ex8 -m data/star.mesh",
+        "xmake clean",
+        "xmake ",
+        "xmake run ex8 -m data/star.mesh",
+        "xmake run ex8 -m /home/send2/.projects/Derivative/data/star.mesh",
+        "xmake run ex8 -m /home/send2/.projects/Derivative/data/star.mesh -o 3 -vis"
     }
 }

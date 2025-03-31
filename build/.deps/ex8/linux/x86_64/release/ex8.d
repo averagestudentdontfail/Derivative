@@ -1,4 +1,7 @@
 {
+    files = {
+        "build/.objs/ex8/linux/x86_64/release/src/ex8.cpp.o"
+    },
     values = {
         "/usr/bin/g++",
         {
@@ -34,8 +37,5 @@
             "-lmfem",
             "-fopenmp"
         }
-    },
-    files = {
-        "build/.objs/ex8/linux/x86_64/release/src/ex8.cpp.o"
     }
 }

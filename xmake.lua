@@ -65,7 +65,7 @@ target("Derivative")
     -- Source
     add_files("src/*.cpp")
     
-    -- Header - This line was missing
+    -- Header files
     add_headerfiles("src/*.hpp")
     
     -- Directories
@@ -78,4 +78,3 @@ target("Derivative")
     else
         add_cxflags("-O3")
     end
-end

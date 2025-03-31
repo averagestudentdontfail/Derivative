@@ -1,6 +1,7 @@
 {
     cmdlines = {
         "xmake clean",
-        "xmake "
+        "xmake ",
+        "xmake clean"
     }
 }

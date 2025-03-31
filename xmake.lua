@@ -1,4 +1,4 @@
-set_project("DerivativePricing")
+set_project("Derivative")
 set_version("1.0.0")
 set_languages("c++17")
 
@@ -59,11 +59,14 @@ add_links("z")
 add_links("mpi")
 
 -- Target
-target("heston-slv-dpg")
+target("Derivative")
     set_kind("binary")
     
     -- Source
     add_files("src/*.cpp")
+
+    -- Header
+    add_files("src/*.hpp")
     
     -- Directories
     add_includedirs("src")

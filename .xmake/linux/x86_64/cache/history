@@ -1,8 +1,5 @@
 {
     cmdlines = {
-        "xmake lua /home/send2/.local/share/xmake/modules/private/utils/statistics.lua",
-        "xmake lua /home/send2/.local/share/xmake/actions/build/cleaner.lua",
-        "xmake clean",
         "xmake ",
         "xmake clean",
         "xmake ",
@@ -46,6 +43,27 @@
         "xmake ",
         "xmake run ex8 -m data/star.mesh",
         "xmake run ex8 -m /home/send2/.projects/Derivative/data/star.mesh",
-        "xmake run ex8 -m /home/send2/.projects/Derivative/data/star.mesh -o 3 -vis"
+        "xmake run ex8 -m /home/send2/.projects/Derivative/data/star.mesh -o 3 -vis",
+        "xmake run ex8 -m /home/send2/.projects/Derivative/data/star.mesh -o 3 -vis",
+        "xmake ",
+        "xmake lua /home/send2/.local/share/xmake/modules/private/utils/statistics.lua",
+        "xmake lua /home/send2/.local/share/xmake/actions/build/cleaner.lua",
+        "xmake run ex8.cpp",
+        "xmake run",
+        "xmake run",
+        "xmake run ex8 --mesh /home/send2/.projects/Derivative/data/star.mesh",
+        "xmake run ex8 --mesh /home/send2/.projects/Derivative/data/star.mesh",
+        "xmake ",
+        "xmake run ex8 --mesh /home/send2/.projects/Derivative/data/star.mesh",
+        "xmake run ex8 --mesh /home/send2/.projects/Derivative/data/star.mesh",
+        "xmake run ex8 --mesh /home/send2/.projects/Derivative/data/star.mesh",
+        "xmake ",
+        "xmake lua /home/send2/.local/share/xmake/modules/private/utils/statistics.lua",
+        "xmake lua /home/send2/.local/share/xmake/actions/build/cleaner.lua",
+        "xmake ",
+        "xmake ",
+        "xmake ",
+        "xmake ",
+        "xmake run ex8 --mesh /home/send2/.projects/Derivative/data/star.mesh -no-vis"
     }
 }

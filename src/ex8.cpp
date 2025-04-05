@@ -71,8 +71,7 @@ int main(int argc, char *argv[])
    //    largest number that gives a final mesh with no more than 10,000
    //    elements.
    {
-      int ref_levels =
-         (int)floor(log(10000./mesh->GetNE())/log(2.)/dim);
+      int ref_levels = (int)floor(log(10000./mesh->GetNE())/log(2.)/dim);
       for (int l = 0; l < ref_levels; l++)
       {
          mesh->UniformRefinement();
@@ -96,8 +95,10 @@ int main(int argc, char *argv[])
       test_order++;
    }
    if (test_order < trial_order)
+   {
       cerr << "Warning, test space not enriched enough to handle primal"
            << " trial space\n";
+   }
 
    FiniteElementCollection *x0_fec, *xhat_fec, *test_fec;
 
@@ -153,7 +154,7 @@ int main(int argc, char *argv[])
    Array<int> ess_bdr(mesh->bdr_attributes.Max());
    ess_bdr = 1;
 
-   MixedBilinearForm *B0 = new MixedBilinearForm(x0_space,test_space);
+   MixedBilinearForm *B0 = new MixedBilinearForm(x0_space, test_space);
    B0->AddDomainIntegrator(new DiffusionIntegrator(one));
    B0->Assemble();
    // MFEM 4.7.0 Change: Use EliminateTrialDofs for MixedBilinearForm
@@ -161,7 +162,7 @@ int main(int argc, char *argv[])
    B0->EliminateTrialDofs(ess_bdr, x.GetBlock(x0_var), F);
    B0->Finalize(); // Finalize *after* elimination
 
-   MixedBilinearForm *Bhat = new MixedBilinearForm(xhat_space,test_space);
+   MixedBilinearForm *Bhat = new MixedBilinearForm(xhat_space, test_space);
    Bhat->AddTraceFaceIntegrator(new TraceJumpIntegrator());
    Bhat->Assemble();
    Bhat->Finalize();
@@ -191,12 +192,12 @@ int main(int argc, char *argv[])
    //    the normal equation operator, A = B^t Sinv B, and
    //    the normal equation right-hand-size, b = B^t Sinv F.
    BlockOperator B(offsets_test, offsets);
-   B.SetBlock(0,0,&matB0);
-   B.SetBlock(0,1,&matBhat);
+   B.SetBlock(0, 0, &matB0);
+   B.SetBlock(0, 1, &matBhat);
    RAPOperator A(B, matSinv, B);
    {
       Vector SinvF(s_test);
-      matSinv.Mult(F,SinvF);
+      matSinv.Mult(F, SinvF);
       B.MultTranspose(SinvF, b);
    }
 
@@ -206,7 +207,7 @@ int main(int argc, char *argv[])
    //        [   0     Shat^{-1} ]      Shat = (Bhat^T Sinv Bhat)
    //
    //    corresponding to the primal (x0) and interfacial (xhat) unknowns.
-   SparseMatrix * Shat = RAP(matBhat, matSinv, matBhat);
+   SparseMatrix *Shat = RAP(matBhat, matSinv, matBhat);
 
 #ifndef MFEM_USE_SUITESPARSE
    const real_t prec_rtol = 1e-3;
@@ -252,30 +253,37 @@ int main(int argc, char *argv[])
    GridFunction x0;
    x0.MakeRef(x0_space, x.GetBlock(x0_var), 0);
 
-   // 11. Save the refined mesh and the solution. This output can be viewed
-   //     later using GLVis: "glvis -m refined.mesh -g sol.gf".
+   // 11. Save the refined mesh and the solution in ParaView format.
    {
+      // Save the mesh in MFEM format for potential later use
       ofstream mesh_ofs("refined.mesh");
       mesh_ofs.precision(8);
       mesh->Print(mesh_ofs);
-      ofstream sol_ofs("sol.gf");
-      sol_ofs.precision(8);
-      x0.Save(sol_ofs);
+      
+      // Create a ParaView data collection to visualize the solution
+      ParaViewDataCollection paraview_dc("ex8_paraview", mesh);
+      paraview_dc.RegisterField("solution", &x0);
+      paraview_dc.SetLevelsOfDetail(1);
+      paraview_dc.SetDataFormat(VTKFormat::BINARY);
+      paraview_dc.SetHighOrderOutput(true);
+      paraview_dc.SetCycle(0);
+      paraview_dc.SetTime(0.0);
+      paraview_dc.Save();
+      
+      cout << "\nSolution saved in ParaView format. To view the result, run:\n"
+           << "  paraview ex8_paraview_000000.pvd\n";
    }
 
-   // 12. Send the solution by socket to a GLVis server.
+   // 12. Visualization option is kept for backward compatibility but
+   //     visualization is now handled through ParaView in section 11.
    if (visualization)
    {
-      char vishost[] = "localhost";
-      int  visport   = 19916;
-      socketstream sol_sock(vishost, visport);
-      sol_sock.precision(8);
-      sol_sock << "solution\n" << *mesh << x0 << flush;
+      cout << "Visualization is now handled through ParaView. See instructions above.\n";
    }
 
    // 13. Free the used memory.
-   delete S0inv; // Operator*, handles CGSolver* or UMFPackSolver*
-   delete Shatinv; // Operator*, handles CGSolver* or UMFPackSolver*
+   delete S0inv;    // Operator*, handles CGSolver* or UMFPackSolver*
+   delete Shatinv;  // Operator*, handles CGSolver* or UMFPackSolver*
    delete Shat;
    delete Bhat;
    delete B0;
